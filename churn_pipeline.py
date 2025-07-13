@@ -32,7 +32,7 @@ except Exception as e:
 # Parameter
 input_data = ParameterString(
     name="InputDataUrl",
-    default_value="s3://mlops-churn-processed-data/preprocessed.csv"
+    default_value="s3://kg-mlops-churn-model-artifacts/preprocessed.csv"
 )
 
 # Preprocessing Step
