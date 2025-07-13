@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: 911167906047.dkr.ecr.ap-south-1.amazonaws.com/churn-prediction-ui:latest
+        image: 392928625070.dkr.ecr.ap-south-1.amazonaws.com/churn-prediction-ui:latest
         ports:
         - containerPort: 80
           name: http
