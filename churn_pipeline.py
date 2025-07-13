@@ -41,14 +41,14 @@ sklearn_image_uri = sagemaker.image_uris.retrieve(
     region=region,
     version="1.2-1",
     py_version="py3",
-    instance_type="ml.m5.xlarge"
+    instance_type="ml.m4.xlarge"
 )
 
 script_processor = ScriptProcessor(
     image_uri=sklearn_image_uri,
     command=["python3"],
     role=role,
-    instance_type="ml.m5.xlarge",
+    instance_type="ml.m4.xlarge",
     instance_count=1,
     sagemaker_session=session,
     base_job_name="churn-preprocess"
@@ -84,14 +84,14 @@ xgb_image_uri = sagemaker.image_uris.retrieve(
     region=region,
     version="1.5-1",
     py_version="py3",
-    instance_type="ml.m5.xlarge"
+    instance_type="ml.m4.xlarge"
 )
 
 xgb_estimator = XGBoost(
     entry_point="train.py",
     source_dir=".",
     role=role,
-    instance_type="ml.m5.xlarge",
+    instance_type="ml.m4.xlarge",
     instance_count=1,
     framework_version="1.5-1",
     py_version="py3",
@@ -151,8 +151,8 @@ register_model_step = ModelStep(
     step_args=model.register(
         content_types=["text/csv"],
         response_types=["text/csv"],
-        inference_instances=["ml.m5.xlarge"],
-        transform_instances=["ml.m5.xlarge"],
+        inference_instances=["ml.m4.xlarge"],
+        transform_instances=["ml.m4.xlarge"],
         model_package_group_name="ChurnModelPackageGroup",
         approval_status="PendingManualApproval",
         model_metrics=model_metrics
