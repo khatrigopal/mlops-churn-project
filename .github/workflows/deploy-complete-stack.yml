@@ -117,7 +117,11 @@ jobs:
         echo "Updating FastAPI deployment..."
         sed -i "s|image: .*|image: $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG|g" k8s-deployment.yaml
         TIMESTAMP=$(date +%s)
-        sed -i "/^        metadata:/a\          annotations:\n            deployment.kubernetes.io/revision: \"$TIMESTAMP\"" k8s-deployment.yaml
+        TIMESTAMP=$(date +%s)
+        sed -i "/^        metadata:/a\
+        annotations:\n\
+          deployment.kubernetes.io/revision: \"$TIMESTAMP\"" k8s-deployment.yaml
+
               
         kubectl apply -f k8s-deployment.yaml --namespace=$K8S_NAMESPACE
         kubectl rollout status deployment/churn-prediction-api --namespace=$K8S_NAMESPACE --timeout=300s
