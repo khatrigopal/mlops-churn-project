@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 # Environment setup
 region = boto3.Session().region_name
 session = PipelineSession()
-role = "arn:aws:iam::911167906047:role/SageMakerChurnRole"
+role = "arn:aws:iam::392928625070:role/SageMakerChurnRole"
 bucket = "kg-mlops-churn-model-artifacts"
 
 # Verify S3 bucket exists
