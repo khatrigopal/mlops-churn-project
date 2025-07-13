@@ -108,24 +108,27 @@ jobs:
         echo "Cluster Node IP: $NODE_IP"
         
     
+    
     - name: Deploy FastAPI
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
         cd fastapi-deployment
-
+    
         echo "Updating FastAPI deployment..."
         sed -i "s|image: .*|image: $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG|g" k8s-deployment.yaml
+    
         TIMESTAMP=$(date +%s)
-        # Corrected sed command for adding annotations
-        sed -i "/^metadata:/a\ \ \ \ annotations:\n\ \ \ \ \ \ deployment.kubernetes.io/revision: \"$TIMESTAMP\"" k8s-deployment.yaml
-
+        sed -i "/^metadata:/a\  annotations:\n    deployment.kubernetes.io/revision: \"$TIMESTAMP\"" k8s-deployment.yaml
+    
+        echo "Applying Kubernetes deployment..."
         kubectl apply -f k8s-deployment.yaml --namespace=$K8S_NAMESPACE
         kubectl rollout status deployment/churn-prediction-api --namespace=$K8S_NAMESPACE --timeout=300s
         kubectl wait --for=condition=ready pod -l app=churn-prediction-api --namespace=$K8S_NAMESPACE --timeout=120s
     
         echo "FastAPI deployed successfully!"
+    
       
   deploy-ui:
     runs-on: ubuntu-latest
