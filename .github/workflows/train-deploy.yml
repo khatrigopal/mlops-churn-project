@@ -3,6 +3,7 @@ name: SageMaker Training and Model Registration
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   train:
